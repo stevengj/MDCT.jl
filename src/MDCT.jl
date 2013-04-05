@@ -3,16 +3,16 @@ export mdct, imdct
 
 import FFTW.fftwNumber, FFTW.r2r, FFTW.r2r!, FFTW.REDFT11
 
-fftwsimilar{T<:fftwNumber}(X::StridedArray{T}, sz) = Array(T, sz...)
-fftwsimilar{T<:Real}(X::StridedArray{T}, sz) = Array(Float64, sz...)
-fftwsimilar{T<:Complex}(X::StridedArray{T}, sz) = Array(Complex128, sz...)
+fftwsimilar{T<:fftwNumber}(X::AbstractArray{T}, sz) = Array(T, sz...)
+fftwsimilar{T<:Real}(X::AbstractArray{T}, sz) = Array(Float64, sz...)
+fftwsimilar{T<:Complex}(X::AbstractArray{T}, sz) = Array(Complex128, sz...)
 
 # The following two routines compute the MDCT and IMDCT via
 # a type-IV DCT (FFTW's REDFT11 r2r transform).  For a review
 # of this relationship, see the notes I posted on Wikipedia:
 #     http://en.wikipedia.org/wiki/Modified_discrete_cosine_transform
 
-function mdct{T<:Number}(X::StridedVector{T})
+function mdct{T<:Number}(X::AbstractVector{T})
     sz = length(X)
     if isodd(sz)
         throw(ArgumentError("mdct requires an even-length vector"))
@@ -50,5 +50,8 @@ function imdct{T<:Number}(X::StridedVector{T})
     end
     return Z
 end
+
+imdct{T<:Number}(X::AbstractVector{T}) = imdct(copy!(fftwsimilar(X, size(X)),
+                                                     X))
 
 end # MDCT
