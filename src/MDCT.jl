@@ -1,7 +1,7 @@
 module MDCT
 export mdct, imdct
 
-import FFTW.fftwNumber, FFTW.r2r, FFTW.r2r!, FFTW.REDFT11
+import Base.FFTW.fftwNumber, Base.FFTW.r2r, Base.FFTW.r2r!, Base.FFTW.REDFT11
 
 fftwsimilar{T<:fftwNumber}(X::AbstractArray{T}, sz) = Array(T, sz...)
 fftwsimilar{T<:Real}(X::AbstractArray{T}, sz) = Array(Float64, sz...)
