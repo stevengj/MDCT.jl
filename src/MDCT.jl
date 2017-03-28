@@ -5,9 +5,9 @@ export mdct, imdct
 
 import Base.FFTW.fftwNumber, Base.FFTW.r2r, Base.FFTW.r2r!, Base.FFTW.REDFT11
 
-fftwsimilar{T<:fftwNumber}(X::AbstractArray{T}, sz) = Array(T, sz...)
-fftwsimilar{T<:Real}(X::AbstractArray{T}, sz) = Array(Float64, sz...)
-fftwsimilar{T<:Complex}(X::AbstractArray{T}, sz) = Array(Complex128, sz...)
+fftwsimilar{T<:fftwNumber}(X::AbstractArray{T}, sz) = Array{T}(sz...)
+fftwsimilar{T<:Real}(X::AbstractArray{T}, sz) = Array{Float64}(sz...)
+fftwsimilar{T<:Complex}(X::AbstractArray{T}, sz) = Array{Complex128}(sz...)
 
 # The following two routines compute the MDCT and IMDCT via
 # a type-IV DCT (FFTW's REDFT11 r2r transform).  For a review
