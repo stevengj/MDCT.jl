@@ -10,8 +10,8 @@
 
 This module computes the modified discrete cosine transform (MDCT) in
 the Julia language and the inverse transform (IMDCT), using the fast
-type-IV discrete cosine tranform (DCT-IV) functions in Julia (via
-FFTW).
+type-IV discrete cosine tranform (DCT-IV) functions in the
+[FFTW.jl package](https://github.com/JuliaMath/FFTW.jl).
 
 Definitions of the MDCT and IMDCT can be found, for example in the
 [Wikipedia MDCT
