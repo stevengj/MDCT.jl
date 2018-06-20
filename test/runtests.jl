@@ -1,4 +1,4 @@
-using MDCT, Compat, LinearAlgebra
+using MDCT, Compat
 using Compat.Test
 
 # O(N^2) implementations straight from the definitions
@@ -29,5 +29,5 @@ Y = mdct(X)
 Z = imdct(Y)
 Ys = slow_mdct(X)
 Zs = slow_imdct(Y)
-@test norm(Y-Ys) < 1e-13 * norm(Y)
-@test norm(Z-Zs) < 1e-13 * norm(Z)
+@test Y ≈ Ys rtol=1e-13
+@test Z ≈ Zs rtol=1e-13
