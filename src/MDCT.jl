@@ -2,9 +2,14 @@ __precompile__()
 
 module MDCT
 export mdct, imdct
-using FFTW
 
-import FFTW: fftwNumber, r2r, r2r!, REDFT11
+if VERSION < v"0.7.0-DEV.602"
+    using Base.FFTW
+    import Base.FFTW: fftwNumber, r2r, r2r!, REDFT11
+else
+    using FFTW
+    import FFTW: fftwNumber, r2r, r2r!, REDFT11
+end
 
 fftwsimilar(X::AbstractArray{T}, sz) where {T<:fftwNumber} = Array{T}(undef, sz...)
 fftwsimilar(X::AbstractArray{T}, sz) where {T<:Real} = Array{Float64}(undef, sz...)
