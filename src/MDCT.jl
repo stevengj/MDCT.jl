@@ -1,6 +1,7 @@
 __precompile__()
 
 module MDCT
+using Compat
 export mdct, imdct
 
 if VERSION < v"0.7.0-DEV.602"
