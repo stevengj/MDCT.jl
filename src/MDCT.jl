@@ -1,20 +1,27 @@
-VERSION >= v"0.4.0-dev+6521" && __precompile__()
+__precompile__()
 
 module MDCT
+using Compat
 export mdct, imdct
 
-import Base.FFTW.fftwNumber, Base.FFTW.r2r, Base.FFTW.r2r!, Base.FFTW.REDFT11
+if VERSION < v"0.7.0-DEV.602"
+    using Base.FFTW
+    import Base.FFTW: fftwNumber, r2r, r2r!, REDFT11
+else
+    using FFTW
+    import FFTW: fftwNumber, r2r, r2r!, REDFT11
+end
 
-fftwsimilar{T<:fftwNumber}(X::AbstractArray{T}, sz) = Array{T}(sz...)
-fftwsimilar{T<:Real}(X::AbstractArray{T}, sz) = Array{Float64}(sz...)
-fftwsimilar{T<:Complex}(X::AbstractArray{T}, sz) = Array{Complex128}(sz...)
+fftwsimilar(X::AbstractArray{T}, sz) where {T<:fftwNumber} = Array{T}(undef, sz...)
+fftwsimilar(X::AbstractArray{T}, sz) where {T<:Real} = Array{Float64}(undef, sz...)
+fftwsimilar(X::AbstractArray{T}, sz) where {T<:Complex} = Array{Complex128}(undef, sz...)
 
 # The following two routines compute the MDCT and IMDCT via
 # a type-IV DCT (FFTW's REDFT11 r2r transform).  For a review
 # of this relationship, see the notes I posted on Wikipedia:
 #     http://en.wikipedia.org/wiki/Modified_discrete_cosine_transform
 
-function mdct{T<:Number}(X::AbstractVector{T})
+function mdct(X::AbstractVector{T}) where {T<:Number}
     sz = length(X)
     if isodd(sz)
         throw(ArgumentError("mdct requires an even-length vector"))
@@ -35,7 +42,7 @@ function mdct{T<:Number}(X::AbstractVector{T})
     return Y
 end
 
-function imdct{T<:Number}(X::StridedVector{T})
+function imdct(X::StridedVector{T}) where {T<:Number}
     N = length(X)
     Z = fftwsimilar(X, 2*N)
     if isodd(N)
@@ -53,7 +60,7 @@ function imdct{T<:Number}(X::StridedVector{T})
     return Z
 end
 
-imdct{T<:Number}(X::AbstractVector{T}) = imdct(copy!(fftwsimilar(X, size(X)),
-                                                     X))
+imdct(X::AbstractVector{T}) where {T<:Number} =
+    imdct(copy!(fftwsimilar(X, size(X)), X))
 
 end # MDCT
