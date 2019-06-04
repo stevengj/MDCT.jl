@@ -10,10 +10,10 @@ import Compat.LinearAlgebra.mul!
 
 if VERSION < v"0.7.0-DEV.602"
     using Base.FFTW
-    import Base.FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!
+    import Base.FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!, plan_r2r
 else
     using FFTW
-    import FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!
+    import FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!, plan_r2r
 end
 
 fftwsimilar(X::AbstractArray{T}, sz) where {T<:fftwNumber} = Array{T}(undef, sz...)
@@ -86,9 +86,9 @@ function mul!(Y::StridedVector{T}, p::Plan{T, N, false}, X::AbstractVector{T}) w
     return p.plan * Y
 end
 
-function mul!(Z::StridedVector{T}, p::Plan{T, N, true}, X::AbstractVector{T}) where {T<:Number, N}
+function mul!(Z::StridedVector{T}, p::Plan{T, N, true}, X::StridedVector{T}) where {T<:Number, N}
     @boundscheck length(Z) == N || throw(DimensionMismatch())
-    Y = p.plan*copy(X)
+    Y = p.plan*X
     N1 = div(N,2)
     N2 = div(N1,2)
     s = 0.5 / N1
@@ -120,7 +120,7 @@ function plan_imdct(X::AbstractVector{T}, flags::Integer=FFTW.ESTIMATE, timelimi
         throw(ArgumentError("imdct requires an even vector length"))
         # FIXME: handle odd case via DCT-II?
     end
-    return Plan{T, 2sz, true}(plan_r2r!(fftwsimilar(X, sz), REDFT11; flags=flags, timelimit=timelimit))
+    return Plan{T, 2sz, true}(plan_r2r(fftwsimilar(X, sz), REDFT11; flags=flags, timelimit=timelimit))
 end
 
 end # MDCT
