@@ -57,6 +57,22 @@ where the last line computes the difference between the overlapped
 IMDCT sum and the original data, and should be around
 10<sup>&minus;15</sup> (floating-point roundoff error).
 
+## Planning
+
+To create a pre-planned transforms for a given size of input vector
+do:
+
+    using MDCT
+    Mp = plan_mdct(X)
+    Ip = plan_imdct(Y)
+
+where `Ip` and `Mp` are pre-planned transforms optimized to allow much
+quicker subsequent transformations. To use them simply:
+
+
+    Xt = Mp*X
+    Yt = Ip*Y
+
 ## Author
 
 This module was written by [Steven G. Johnson](http://math.mit.edu/~stevenj/).
