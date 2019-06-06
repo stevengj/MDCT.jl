@@ -23,11 +23,16 @@ function slow_imdct(y::AbstractVector{T}) where {T<:Number}
     return x
 end
 
-N=100
-X = rand(N)
-Y = mdct(X)
-Z = imdct(Y)
-Ys = slow_mdct(X)
-Zs = slow_imdct(Y)
-@test Y ≈ Ys rtol=1e-13
-@test Z ≈ Zs rtol=1e-13
+for N=100:4:108
+    X = rand(N)
+    Y = mdct(X)
+    Z = imdct(Y)
+    Yp = plan_mdct(X)*X
+    Zp = plan_imdct(Y)*Y
+    Ys = slow_mdct(X)
+    Zs = slow_imdct(Y)
+    @test Y ≈ Ys rtol=1e-13
+    @test Z ≈ Zs rtol=1e-13
+    @test Yp ≈ Ys rtol=1e-13
+    @test Zp ≈ Zs rtol=1e-13
+end
