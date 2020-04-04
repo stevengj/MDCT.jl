@@ -3,11 +3,6 @@
 [![Build Status](https://travis-ci.org/stevengj/MDCT.jl.svg?branch=master)](https://travis-ci.org/stevengj/MDCT.jl)
 [![Build status](https://ci.appveyor.com/api/projects/status/pl074ibwbl445tal?svg=true)](https://ci.appveyor.com/project/StevenGJohnson/mdct-jl)
 
-[![MDCT](http://pkg.julialang.org/badges/MDCT_0.3.svg)](http://pkg.julialang.org/?pkg=MDCT&ver=0.3)
-[![MDCT](http://pkg.julialang.org/badges/MDCT_0.4.svg)](http://pkg.julialang.org/?pkg=MDCT&ver=0.4)
-[![MDCT](http://pkg.julialang.org/badges/MDCT_0.5.svg)](http://pkg.julialang.org/?pkg=MDCT&ver=0.5)
-[![MDCT](http://pkg.julialang.org/badges/MDCT_0.6.svg)](http://pkg.julialang.org/?pkg=MDCT&ver=0.6)
-
 This module computes the modified discrete cosine transform (MDCT) in
 the Julia language and the inverse transform (IMDCT), using the fast
 type-IV discrete cosine tranform (DCT-IV) functions in the
