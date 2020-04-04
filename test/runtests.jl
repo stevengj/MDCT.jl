@@ -1,5 +1,4 @@
-using MDCT, Compat
-using Compat.Test
+using MDCT, Test
 
 # O(N^2) implementations straight from the definitions
 

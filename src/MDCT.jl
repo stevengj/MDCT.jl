@@ -1,20 +1,15 @@
 VERSION < v"0.7.0-beta2.199" && __precompile__()
 
 module MDCT
-using Compat
-using Compat.LinearAlgebra
+
+using LinearAlgebra
 import AbstractFFTs
 export mdct, imdct, plan_mdct, plan_imdct
 import Base: *, size
-import Compat.LinearAlgebra.mul!
+import LinearAlgebra: mul!
 
-if VERSION < v"0.7.0-DEV.602"
-    using Base.FFTW
-    import Base.FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!, plan_r2r
-else
-    using FFTW
-    import FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!, plan_r2r
-end
+using FFTW
+import FFTW: fftwNumber, r2r, r2r!, REDFT11, plan_r2r!, plan_r2r
 
 fftwsimilar(X::AbstractArray{T}, sz) where {T<:fftwNumber} = Array{T}(undef, sz...)
 fftwsimilar(X::AbstractArray{T}, sz) where {T<:Real} = Array{Float64}(undef, sz...)
