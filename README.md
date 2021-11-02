@@ -1,7 +1,6 @@
 # MDCT module for Julia
 
-[![Build Status](https://travis-ci.org/stevengj/MDCT.jl.svg?branch=master)](https://travis-ci.org/stevengj/MDCT.jl)
-[![Build status](https://ci.appveyor.com/api/projects/status/pl074ibwbl445tal?svg=true)](https://ci.appveyor.com/project/StevenGJohnson/mdct-jl)
+[![Build Status](https://github.com/stevengj/MDCT.jl/workflows/CI/badge.svg)](https://github.com/stevengj/MDCT.jl/actions)
 
 This module computes the modified discrete cosine transform (MDCT) in
 the Julia language and the inverse transform (IMDCT), using the fast
